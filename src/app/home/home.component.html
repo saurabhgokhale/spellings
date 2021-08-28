@@ -1,0 +1,22 @@
+<p>Spelling Practice</p>
+<table>
+    <tr *ngFor="let word of words;let i = index">
+        <td>
+            <audio controls>
+                <source src="https://ssl.gstatic.com/dictionary/static/sounds/oxford/{{word}}--_us_1.mp3" type="audio/mpeg">
+              </audio> 
+        </td>
+        <td>
+            <input type="text" #spelling>
+        </td>
+        <td><button (click)="checkSpelling(spelling.value, i)">check</button></td>
+        
+    </tr>
+</table>
+<!--div *ngFor="let word of words">
+    <div>{{word}}</div>
+    <audio controls>
+        <source src="https://ssl.gstatic.com/dictionary/static/sounds/oxford/{{word}}--_us_1.mp3" type="audio/mpeg">
+      </audio>
+    <input type="text">
+</div-->
