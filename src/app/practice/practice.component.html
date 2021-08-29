@@ -1,4 +1,11 @@
-<div class="page">
+
+<div class="row stats" style="padding-top: 50px;">
+    <div class="block center">Total Words: {{totalWords}}</div>
+    <div class="block center">Correct: {{correctWords}}</div>
+    <div class="block center">Wrong: {{wrongWords}}</div>
+</div>
+
+<div class="box">
     <div class="row">
         <div class="block center" style="width: 20%;">
             <audio controls>
@@ -7,13 +14,13 @@
         </div>
         <div class="block center" style="width: 60%;"><input value='' [style.width.ch]="charWidth" [style.color]="fontColor" (keyup)="onKey(spelling.value)" #spelling></div>
         <div class="block center left" style="width: 20%;">
-            <button type="button" [disabled]="valueEntered" class="btn btn-primary" (click)="checkSpelling(spelling.value, 0)">Check Spelling</button>
+            <button type="button" [disabled]="valueEntered" class="btn btn-primary" (click)="checkSpelling(spelling.value, 0)">Spell Check</button>
         </div>
     </div>
 
     <div class="row" style="padding-top: 50px;">
         <div class="block center"></div>
-        <div class="block center"><button type="button" class="btn btn-secondary">Next</button></div>
+        <div class="block center"><button type="button" class="btn btn-secondary">Next Word</button></div>
         <div class="block center"></div>
     </div>
 </div>

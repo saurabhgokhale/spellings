@@ -15,6 +15,10 @@ export class PracticeComponent implements OnInit {
   public charWidth = 5;
   public fontColor = "dodgerblue";
   public valueEntered = true;
+  public totalWords = 5;
+  public correctWords = 0;
+  public wrongWords = 0;
+
   constructor() { }
 
   ngOnInit(): void {
