@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-practice',
@@ -11,6 +12,7 @@ https://www.csscodelab.com/css-input-field-underline-under-each-character/
 */
 export class PracticeComponent implements OnInit {
 
+  public words: any[] = [];
   public word: string = '';
   public charWidth = 5;
   public fontColor = "dodgerblue";
@@ -18,19 +20,27 @@ export class PracticeComponent implements OnInit {
   public totalWords = 5;
   public correctWords = 0;
   public wrongWords = 0;
+  private response: any;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.http.get('https://spellings-dcs.s3.ap-south-1.amazonaws.com/spelling.txt',{ responseType: 'text' as 'json'})
+    .subscribe(
+      data => {
+        console.log(data);
+        this.response = data;
+        this.words = this.response.split(',');
+    })
     this.word = 'watermelon';
     this.charWidth = this.word.length * (1 + 0.5);
-    let testObject = { 'one': ['one','two','three'], 'two': 2, 'three': 3 };
+    let spellObject = { 'correct': [], 'wrong': [], 'three': 3 };
 
     // Put the object into storage
-    localStorage.setItem('testObject', JSON.stringify(testObject));
+    localStorage.setItem('spellObject', JSON.stringify(spellObject));
 
     // Retrieve the object from storage
-    let retrievedObject = localStorage.getItem('testObject');
+    let retrievedObject = localStorage.getItem('spellObject');
 
     console.log('retrievedObject: ', JSON.parse(retrievedObject || '{}'));
   }
