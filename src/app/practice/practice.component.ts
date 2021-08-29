@@ -37,8 +37,8 @@ export class PracticeComponent implements OnInit {
   }
 
   checkSpelling(spelling: string, index: number): void {
-    console.log(spelling == 'water');
-    if(spelling == 'water') {
+    console.log(spelling == this.word);
+    if(spelling === this.word) {
       this.fontColor = "green";
     }
     else {

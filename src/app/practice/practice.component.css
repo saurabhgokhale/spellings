@@ -32,3 +32,10 @@ input:focus {
 .left{
     float: left;
 }
+
+.page{
+    margin: 20px;
+    background-color: #F1F3F4;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px rgb(213, 207, 207);
+}
