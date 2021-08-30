@@ -17,10 +17,12 @@ export class PracticeComponent implements OnInit {
   public charWidth = 5;
   public fontColor = "dodgerblue";
   public valueEntered = true;
-  public totalWords = 5;
-  public correctWords = 0;
-  public wrongWords = 0;
+  public totalWords = 0;
+  public correctCount = 0;
+  public wrongCount = 0;
   private response: any;
+  private retrievedObject: any;
+  private index = 0;
 
   constructor(private http: HttpClient) { }
 
@@ -31,18 +33,22 @@ export class PracticeComponent implements OnInit {
         console.log(data);
         this.response = data;
         this.words = this.response.split(',');
+
+        // Retrieve the object from storage
+        if(localStorage.getItem('spellObject') == null) {
+          this.retrievedObject = { 'correct': [], 'wrong': [], 'wordCount': 0, 'correctCount': 0, 'wrongCount': 0};
+          // Put the object into storage
+          localStorage.setItem('spellObject', JSON.stringify(this.retrievedObject));
+        }
+        this.retrievedObject = JSON.parse(localStorage.getItem('spellObject')|| '');
+        console.log('retrievedObject: ', this.retrievedObject);
+        this.totalWords = this.words.length;
+        this.index = this.retrievedObject['wordCount'];
+        console.log("index: " + this.index);
+        this.word = this.words[this.index]; //'watermelon';
+        this.charWidth = this.word.length * (1 + 0.5);
+
     })
-    this.word = 'watermelon';
-    this.charWidth = this.word.length * (1 + 0.5);
-    let spellObject = { 'correct': [], 'wrong': [], 'three': 3 };
-
-    // Put the object into storage
-    localStorage.setItem('spellObject', JSON.stringify(spellObject));
-
-    // Retrieve the object from storage
-    let retrievedObject = localStorage.getItem('spellObject');
-
-    console.log('retrievedObject: ', JSON.parse(retrievedObject || '{}'));
   }
 
   onKey(spelling: string) {
@@ -50,14 +56,28 @@ export class PracticeComponent implements OnInit {
     else this.valueEntered = true;
   }
 
-  checkSpelling(spelling: string, index: number): void {
+  checkSpelling(spelling: string): void {
     console.log(spelling == this.word);
     if(spelling === this.word) {
       this.fontColor = "green";
+      this.retrievedObject['correct'].push(this.word);
+      this.retrievedObject['correctCount'] = this.retrievedObject['correctCount'] + 1;
+      this.correctCount++;
     }
     else {
       this.fontColor = "red";
+      this.retrievedObject['wrong'].push(this.word);
+      this.retrievedObject['wrongCount'] = this.retrievedObject['wrongCount'] + 1;
+      this.wrongCount++;
     }
+    this.index++;
+    this.retrievedObject['wordCount'] = this.retrievedObject['wordCount'] + 1;
+    localStorage.setItem('spellObject', JSON.stringify(this.retrievedObject));
   }
+
+  nextWord(): void {
+    this.word = this.words[this.index];
+    this.charWidth = this.word.length * (1 + 0.5);
+  }  
 
 }
