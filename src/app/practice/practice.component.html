@@ -8,13 +8,18 @@
 <div class="box">
     <div class="row">
         <div class="block center" style="width: 20%;">
-            <audio controls>
-                <source src="https://ssl.gstatic.com/dictionary/static/sounds/oxford/{{word}}--_us_1.mp3" type="audio/mpeg">
-            </audio> 
+            <audio controls src='https://ssl.gstatic.com/dictionary/static/sounds/oxford/{{word}}--_us_1.mp3'> </audio>
         </div>
-        <div class="block center" style="width: 60%;"><input value='' [style.width.ch]="charWidth" [style.color]="fontColor" (keyup)="onKey(spelling.value)" #spelling ngModel></div>
+
+        <div class="block center " style="width: 60%;">
+            <form>
+                <div class="form-group">
+                    <input name="spelling" value='' [style.width.ch]="charWidth" [style.color]="fontColor" (keyup)="onKey(spelling)" [(ngModel)]="spelling">
+                </div>
+            </form>
+        </div>
         <div class="block center left" style="width: 20%;">
-            <button type="button" [disabled]="valueEntered" class="btn btn-primary" (click)="checkSpelling(spelling.value)">Spell Check</button>
+            <button type="button" [disabled]="valueEntered" class="btn btn-primary" (click)="checkSpelling(spelling)">Spell Check</button>
         </div>
     </div>
 
